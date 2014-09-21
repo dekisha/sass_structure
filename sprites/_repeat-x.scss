@@ -1,0 +1,68 @@
+@import "compass/utilities/sprites/base";
+
+// General Sprite Defaults
+// You can override them before you import this file.
+$repeat-x-sprite-base-class: ".repeat-x-sprite" !default;
+$repeat-x-sprite-dimensions: false !default;
+$repeat-x-position: 0% !default;
+$repeat-x-spacing: 100 !default;
+$repeat-x-repeat: no-repeat !default;
+$repeat-x-prefix: '' !default;
+$repeat-x-clean-up: true !default;
+$repeat-x-layout:vertical !default;
+$repeat-x-inline: false !default;
+
+
+$repeat-x-sprites: sprite-map("repeat-x/*.png", $layout: $repeat-x-layout, $cleanup: $repeat-x-clean-up, $spacing: $repeat-x-spacing );
+
+
+// All sprites should extend this class
+// The repeat-x-sprite mixin will do so for you.
+@if $repeat-x-inline {
+  #{$repeat-x-sprite-base-class} {
+    background-image: inline-sprite($repeat-x-sprites);
+  } 
+} @else {
+  #{$repeat-x-sprite-base-class} {
+    background: $repeat-x-sprites no-repeat;
+  }
+}
+//sass functions to return the dimensions of a sprite image as units
+
+@function repeat-x-sprite-width($name) {
+  $file: sprite_file($repeat-x-sprites, $name);
+  @return image-width($file);
+}
+
+@function repeat-x-sprite-height($name) {
+  $file: sprite_file($repeat-x-sprites, $name);
+  @return image-height($file);
+}
+
+
+// Use this to set the dimensions of an element
+// based on the size of the original image.
+@mixin repeat-x-sprite-dimensions($name) {
+  @include sprite-dimensions($repeat-x-sprites, $name)
+}
+
+// Move the background position to display the sprite.
+@mixin repeat-x-sprite-position($name, $offset-x: 0, $offset-y: 0) {
+  @include sprite-background-position($repeat-x-sprites, $name, $offset-x, $offset-y)
+}
+
+// Extends the sprite base class and set the background position for the desired sprite.
+// It will also apply the image dimensions if $dimensions is true.
+@mixin repeat-x-sprite($name, $dimensions: $repeat-x-sprite-dimensions, $offset-x: 0, $offset-y: 0) {
+  @extend #{$repeat-x-sprite-base-class};
+  @include sprite($repeat-x-sprites, $name, $dimensions, $offset-x, $offset-y)
+}
+
+@mixin repeat-x-sprites($sprite-names, $dimensions: $repeat-x-sprite-dimensions, $prefix: sprite-map-name($repeat-x-sprites), $offset-x: 0, $offset-y: 0) {
+  @include sprites($repeat-x-sprites, $sprite-names, $repeat-x-sprite-base-class, $dimensions, $prefix, $offset-x, $offset-y)
+}
+
+// Generates a class for each sprited image.
+@mixin all-repeat-x-sprites($dimensions: $repeat-x-sprite-dimensions, $prefix: sprite-map-name($repeat-x-sprites), $offset-x: 0, $offset-y: 0) {
+  @include repeat-x-sprites(arrow-scroll-down icon-active-link-circles icon-twitter pattern shape-biography shape-scroll-to-blue shape-scroll-to-green shape-scroll-to-red shape-scroll-to-yellow, $dimensions, $prefix, $offset-x, $offset-y);
+}

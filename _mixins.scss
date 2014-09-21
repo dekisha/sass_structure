@@ -1,0 +1,19 @@
+//FONTS
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+
+
+
+// DIMENSIONS
+
+
+//COLORS
+$brandColor: #cc2a41;
+$darkColor: #424254;
+$grayColor: #ededed;
+
+//MIXINS
+
+// EXTENDS
+.clearfix {
+	@include legacy-pie-clearfix();
+}
